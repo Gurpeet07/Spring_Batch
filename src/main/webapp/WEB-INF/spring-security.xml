@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+	<beans:import resource="spring-servlet.xml"/>
+	<http auto-config="true">
+	<intercept-url pattern="/login" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+	<intercept-url pattern="/*" access="ROLE_ADMIN,ROLE_USER"/>
+	<form-login login-page="/login" default-target-url="/target" always-use-default-target="true" authentication-failure-url="/failure"/>
+	</http>
+	<authentication-manager>
+	<authentication-provider>
+	<!-- <jdbc-user-service data-source-ref="ds" 
+	users-by-username-query="select username,password,enabled from user_dumna1 where username=? " 
+	authorities-by-username-query="select username,user_role from user_roles3 where username=?"/> -->
+	<user-service>
+	<user name="u1" password="p1" authorities="ROLE_USER"/>
+	<user name="u2" password="p2" authorities="ROLE_ADMIN"/>
+	</user-service>
+	</authentication-provider>
+	
+	</authentication-manager>
+	</beans:beans>
